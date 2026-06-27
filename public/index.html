@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CodeBot Studio</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- RAIL -->
+  <div class="rail">
+    <div class="rail-logo" title="CodeBot Studio">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>
+    </div>
+    <div class="rail-divider"></div>
+    <div class="rail-live-count" id="liveCount">
+      <span class="dot off" id="liveDot"></span>
+      <span id="liveNum">0</span>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <span>Bot của bạn</span>
+      <button class="icon-btn" id="btnNewBot" title="Tạo bot mới" aria-label="Tạo bot mới">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+    </div>
+    <div class="bot-list" id="botList">
+      <div class="empty-hint" id="emptyHint">
+        Chưa có bot nào.<br>Bấm <b>+</b> để tạo bot đầu tiên.
+      </div>
+    </div>
+    <div class="sidebar-footer">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9-9"/><path d="M4 11a9 9 0 1 0 9 9"/></svg>
+      Server chạy bot thật 24/7
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main" id="main">
+    <div class="empty-main" id="emptyMain">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+      <p>Chọn một bot bên trái, hoặc tạo bot mới</p>
+    </div>
+
+    <div class="bot-view" id="botView" style="display:none">
+      <div class="bot-header">
+        <div class="bot-title">
+          <span class="dot off" id="headerDot"></span>
+          <span class="mono" id="headerName">bot.js</span>
+          <span class="unsaved" id="unsavedTag" style="display:none">chưa lưu</span>
+        </div>
+        <div class="bot-actions">
+          <button class="btn ghost" id="btnSave">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Lưu
+          </button>
+          <button class="btn danger-outline" id="btnDelete">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+          </button>
+          <div class="vline"></div>
+          <button class="btn primary" id="btnToggleLive">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4.93 4.93a10 10 0 1 0 14.14 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
+            <span id="toggleLiveText">Bật chạy 24/7</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="bot-body">
+        <div class="editor-pane">
+          <textarea id="codeEditor" class="mono" spellcheck="false" placeholder="// Viết code bot.js của bạn ở đây..."></textarea>
+        </div>
+        <div class="console-pane">
+          <div class="console-header">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+            CONSOLE
+            <span class="console-live" id="consoleLiveTag" style="display:none">
+              <span class="dot on"></span> đang chạy
+            </span>
+          </div>
+          <div class="console-body" id="consoleBody">
+            <p class="console-hint">Bật "chạy 24/7" để khởi động bot thật bằng Node.js trên server. Log sẽ hiện ở đây theo thời gian thực.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: tạo bot mới -->
+<div class="modal-overlay" id="modalNew" style="display:none">
+  <div class="modal">
+    <h3>Tạo bot mới</h3>
+    <input id="newBotName" class="mono" placeholder="ten-bot (không dấu, không khoảng trắng)" autocomplete="off" />
+    <div class="modal-actions">
+      <button class="btn ghost" id="btnCancelNew">Hủy</button>
+      <button class="btn primary" id="btnConfirmNew">Tạo</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: xác nhận xoá -->
+<div class="modal-overlay" id="modalDelete" style="display:none">
+  <div class="modal">
+    <h3>Xoá bot này?</h3>
+    <p class="modal-desc">Bot sẽ bị dừng và code sẽ bị xoá vĩnh viễn. Không thể hoàn tác.</p>
+    <div class="modal-actions">
+      <button class="btn ghost" id="btnCancelDelete">Hủy</button>
+      <button class="btn danger" id="btnConfirmDelete">Xoá</button>
+    </div>
+  </div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>
