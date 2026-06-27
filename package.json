@@ -1,0 +1,17 @@
+{
+  "name": "codebot-studio",
+  "version": "1.0.0",
+  "description": "Web tạo & chạy bot Node.js 24/7 - giao diện kiểu Discord",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "ws": "^8.17.0"
+  }
+}
